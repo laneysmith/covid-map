@@ -1,0 +1,22 @@
+{
+  "name": "covid-map",
+  "version": "1.0.0",
+  "scripts": {
+    "install-server": "cd server && npm install",
+    "install-client": "cd client && yarn install",
+    "postinstall": "concurrently \"(npm run install-server)\" \"(npm run install-client)\"",
+    "copy-env": "cp client/.env.local.example client/.env.local",
+    "start-server": "cd server && npm start",
+    "start-client": "cd client && yarn start",
+    "start": "concurrently \"npm run start-server\" \"npm run start-client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laneysmith/covid-map.git"
+  },
+  "author": "Laney Smith",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
