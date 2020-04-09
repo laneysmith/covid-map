@@ -1,0 +1,17 @@
+header {
+  position: absolute;
+  left: 10px;
+  top:10px;
+  z-index: 1;
+  text-shadow: 1px 1px 3px #FFFFFF, 1px 1px 1px #FFFFFF;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  margin: 0 0 0.5rem 0;
+}
+
+header h2 {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+}

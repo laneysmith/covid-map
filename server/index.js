@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
+const req = require('request');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const csv = require('csvtojson');
 require('dotenv').config();
 
 app.use(cors());
@@ -18,10 +20,36 @@ app.get('/covid', async (request, response, next) => {
   //    - transform it, handle the "Geographic Exceptions"
   //    - overwrite old data in db
   //    - return data
-  const csvFilePath = './data.csv';
-  const csv = require('csvtojson');
-  const jsonArray = await csv().fromFile(csvFilePath);
-  response.json(jsonArray);
+  let transformedData = {
+    data: {},
+    maxCases: 0,
+    maxDeaths: 0,
+  };
+  csv()
+    .fromFile('./fullData.csv')
+    .subscribe(
+      (row) => {
+        const { date, county, state, fips, cases, deaths } = row;
+        if (!fips) return;
+        if (!transformedData.data.hasOwnProperty(date)) {
+          transformedData.data[date] = {};
+        }
+        const casesInt = parseInt(cases, 10);
+        const deathsInt = parseInt(deaths, 10);
+        if (casesInt > transformedData.maxCases) {
+          transformedData.maxCases = casesInt;
+        }
+        if (deathsInt > transformedData.maxDeaths) {
+          transformedData.maxDeaths = deathsInt;
+        }
+        transformedData.data[date][fips] = { cases: casesInt, deaths: deathsInt };
+      },
+      // TODO: actual error handling
+      () => console.log('broke'),
+      () => {
+        response.json(transformedData);
+      }
+    );
 });
 
 const port = process.env.PORT || 5000;

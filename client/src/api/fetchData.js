@@ -1,6 +1,6 @@
 const API_URL =
   process.env.NODE_ENV === 'production'
-    ? 'http://sleepy-escarpment-81369.herokuapp.com'
+    ? process.env.REACT_APP_PROD_API_URL
     : 'http://localhost:5000';
 
 const fetchData = async () => {

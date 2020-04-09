@@ -1,0 +1,45 @@
+.legend {
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  top: 10px;
+  position: absolute;
+  right: 10px;
+  min-width: 200px;
+  z-index: 1;
+}
+
+.legend-controls {
+  display: flex;
+  margin: 0;
+  padding: 10px;
+  border-bottom: 1px solid #efefef;
+}
+
+.legend select {
+  flex: 1;
+}
+
+.legend-scale {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-auto-flow: column;
+  padding: 10px;
+}
+
+.legend label {
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.legend div span {
+  border-radius: 50%;
+  display: inline-block;
+  height: 12px;
+  margin-right: 5px;
+  width: 12px;
+}

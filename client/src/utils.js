@@ -11,29 +11,16 @@ export function formatNumber(number) {
 }
 
 /**
- * @param {Array<>} data
+ * @param {number} max - maximum number of cases or deaths
  * @param {string} variable - 'CASE' or 'DEATHS'
  * @return {number} maximum value for variable
  */
-export function getMax(data, variable) {
-  if (!data) {
-    return 0;
-  }
-  return Math.max(...data.map((item) => parseInt(item[variable])));
-}
-
-/**
- * @param {Array<>} data
- * @param {string} variable - 'CASE' or 'DEATHS'
- * @return {number} maximum value for variable
- */
-export function generateColorScales(data, variable) {
-  const max = getMax(data, variable);
+export function generateColorScales(max, variable) {
   let scale = [0, COLORS[0]];
   const colorsLen = COLORS.length;
-  const max500 = Math.ceil(max / 500) * 500;
-  for (let i = 6; i >= 0; i--) {
-    scale.push(max500 / Math.pow(2, i));
+  const roundedMax = Math.ceil(max / 500) * 500;
+  for (let i = 7; i >= 0; i--) {
+    scale.push(roundedMax / Math.pow(2, i));
     scale.push(COLORS[colorsLen - i - 1]);
   }
   return scale;
