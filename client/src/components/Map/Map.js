@@ -75,7 +75,7 @@ const App = () => {
 
         mapRef.current.on('mouseenter', COUNTIES_LAYER, (e) => {
           if (e.features.length) {
-            mapRef.current.getCanvas().style.cursor = 'pointer';
+            mapRef.current.getCanvas().style.cursor = 'crosshair';
           }
         });
 
@@ -120,7 +120,6 @@ const App = () => {
         paint: {
           'fill-outline-color': 'rgba(0,0,0,0.5)',
           'fill-color': createFillColorArgs(selectedVariable, colorScales),
-          'fill-opacity': ['case', ['==', ['feature-state', selectedVariable], null], 0.2, 0.75],
         },
       },
       'waterway-label'
@@ -184,6 +183,11 @@ const App = () => {
   );
 };
 
+/**
+ * Outputs the arguments for the setFeatureState method
+ * @param {string} fips - fips #
+ * @param {object} detail - cases & deaths
+ */
 const createSetFeatureStateArgs = (fips, detail) => {
   const cases = (detail && detail.cases) || 0;
   const deaths = (detail && detail.deaths) || 0;
@@ -200,11 +204,24 @@ const createSetFeatureStateArgs = (fips, detail) => {
   ];
 };
 
+/**
+ * Outputs the 'paint.fill-color' expression for county polygons
+ * based on the selected variable
+ * @param {string} selectedVariable - 'cases' or 'deaths'
+ * @param {object} colorScales
+ */
 const createFillColorArgs = (selectedVariable, colorScales) => [
-  'interpolate',
-  ['linear'],
-  ['feature-state', selectedVariable],
-  ...colorScales[selectedVariable],
+  'case',
+  ['==', ['feature-state', selectedVariable], null],
+  'rgba(0,0,0,0.25)',
+  ['==', ['feature-state', selectedVariable], 0],
+  'rgba(0,0,0,0.25)',
+  [
+    'interpolate',
+    ['linear'],
+    ['feature-state', selectedVariable],
+    ...colorScales[selectedVariable],
+  ],
 ];
 
 export default App;

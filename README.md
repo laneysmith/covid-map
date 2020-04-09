@@ -1,6 +1,6 @@
 # Covid-19 Map
 
-An interactive map displaying Covid-19 cases for US counties.
+An interactive map displaying cumulative Covid-19 cases and deaths for US counties. See [the NY Times covid-19-data project](https://github.com/nytimes/covid-19-data) for more information on the data.
 
 ![covid-map-preview](https://user-images.githubusercontent.com/11357045/78850741-c6927e00-79cc-11ea-9702-efcb1b9bb603.gif)
 

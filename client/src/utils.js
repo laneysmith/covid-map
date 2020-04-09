@@ -16,7 +16,7 @@ export function formatNumber(number) {
  * @return {number} maximum value for variable
  */
 export function generateColorScales(max, variable) {
-  let scale = [0, COLORS[0]];
+  let scale = [1, COLORS[0]];
   const colorsLen = COLORS.length;
   const roundedMax = Math.ceil(max / 500) * 500;
   for (let i = 7; i >= 0; i--) {
