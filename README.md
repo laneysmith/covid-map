@@ -1,5 +1,9 @@
 # Covid-19 Map
 
+An interactive map displaying Covid-19 cases for US counties.
+
+![covid-map-preview](https://user-images.githubusercontent.com/11357045/78850741-c6927e00-79cc-11ea-9702-efcb1b9bb603.gif)
+
 ## Quick start
 
 1. Install all project dependencies: `npm install`
