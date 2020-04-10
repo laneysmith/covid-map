@@ -18,3 +18,4 @@ The app is deployed at [https://covid.laney.tech](https://covid.laney.tech//).
 - [Create React App](https://github.com/facebook/create-react-app)
 - [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/)
 - [Hihayk Color Scale Generator](https://hihayk.github.io/scale/)
+- [Pixel Perfect svg icons](https://www.flaticon.com/authors/pixel-perfect)

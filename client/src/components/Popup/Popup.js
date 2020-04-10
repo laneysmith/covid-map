@@ -1,13 +1,17 @@
 import React from 'react';
 
 import { formatNumber } from '../../utils';
+import { EXCEPTIONS } from './exceptions';
 import './_popup-styles.css';
 
 const Popup = ({ feature }) => {
-  const { id, COUNTY: county } = feature.properties;
+  const { id, properties } = feature;
+  const { COUNTY: county } = properties;
   const { cases, deaths } = feature.state;
   const hasCasesData = typeof cases === 'number';
   const hasDeathsData = typeof deaths === 'number';
+  const stringId = id.toString();
+  const exceptionNote = EXCEPTIONS[stringId] ? `Note: ${EXCEPTIONS[stringId]}` : null;
 
   return (
     <div id={`popup-${id}`}>
@@ -27,6 +31,7 @@ const Popup = ({ feature }) => {
           <i>No data for this county.</i>
         </div>
       )}
+      {exceptionNote && <div className="exception-note">{exceptionNote}</div>}
     </div>
   );
 };

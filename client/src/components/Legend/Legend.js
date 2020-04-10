@@ -1,6 +1,5 @@
 import React from 'react';
 
-import AnimationControls from './AnimationControls';
 import DateControls from './DateControls';
 import VariableControls from './VariableControls';
 import Scale from './Scale';
@@ -18,12 +17,12 @@ const Legend = ({
   onChangeDate,
 }) => (
   <div id="state-legend" className="legend">
-    <AnimationControls disabled={!loaded} animate={animate} onChangeAnimate={onChangeAnimate} />
     <DateControls
-      disabled={!loaded || animate}
+      disabled={!loaded}
       allDates={allDates}
       selectedDate={selectedDate}
       onChangeDate={onChangeDate}
+      animate={animate} onChangeAnimate={onChangeAnimate} 
     />
     <VariableControls
       disabled={!loaded || animate}

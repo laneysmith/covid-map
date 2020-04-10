@@ -16,8 +16,13 @@ const Scale = ({ colorScales, selectedVariable }) => {
           chunkedScale.map((step, index) => {
             const [value, color] = step;
             return (
-              <div key={`scale-step-${index}`} id={`scale-step-${index}`}>
+              <div
+                key={`scale-step-${index}`}
+                id={`scale-step-${index}`}
+                className="legend-scale__step"
+              >
                 <span
+                  className="legend-scale__step-swatch"
                   style={{
                     backgroundColor: `${color}`,
                     border: `1px solid rgba(0, 0, 0, 0.${index + 2})`,
@@ -28,14 +33,13 @@ const Scale = ({ colorScales, selectedVariable }) => {
             );
           })}
       </div>
-      <a
-        href="https://github.com/laneysmith/covid-map"
-        className="source-link"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        view source on github
-      </a>
+      <div className="source-notes">
+        Data from The New York Times
+        <br />
+        <a href="https://github.com/laneysmith/covid-map" target="_blank" rel="noopener noreferrer">
+          View project source on github
+        </a>
+      </div>
     </div>
   );
 };

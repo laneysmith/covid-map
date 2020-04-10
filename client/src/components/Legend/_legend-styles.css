@@ -24,36 +24,85 @@
   flex-direction: column;
 }
 
+.legend label {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
 .legend select {
   flex: 1;
+  height: 20px;
+  margin-right: 8px;
 }
 
 .legend-scale {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 0px;
+  grid-column-gap: 5px;
   grid-row-gap: 0px;
   grid-auto-flow: column;
   padding: 0 0 5px 0;
 }
 
-.legend label {
-  font-weight: 600;
-  margin-right: 10px;
+.legend-scale__step {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.legend div span {
+.legend-scale__step-swatch {
   border-radius: 50%;
   display: inline-block;
   height: 12px;
-  margin-right: 5px;
   width: 12px;
+  margin-right: 5px;
 }
 
-.source-link {
+.source-notes {
   color: grey;
   font-size: 8pt;
-  line-height: 8pt;
-  text-align: end;
+  line-height: 10pt;
+  max-width: 200px;
+}
+
+.source-notes a,
+a:visited,
+a:hover,
+a:active {
+  color: grey;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px solid #c0c0c0;
+  background-color: white;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #f8f8f8;
+}
+
+button:disabled .animate-icon {
+  fill: #C0C0C0;
+}
+
+select:focus,
+button:focus {
+  outline: none;
+  border-color: #14899C;
+}
+
+.animate-icon {
+  fill: #222222;
+  height: 10px;
+  width: 10px;
 }

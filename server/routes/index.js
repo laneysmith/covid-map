@@ -4,6 +4,13 @@ const csv = require('csvtojson');
 
 const router = express.Router();
 
+// New York City Exceptions
+const BRONX_COUNTY = '36005';
+const KINGS_COUNTY = '36047';
+const NEW_YORK_COUNTY = '36061';
+const QUEENS_COUNTY = '36081';
+const RICHMOND_COUNTY = '36085';
+
 router.get('/', async (request, response, next) => {
   // TODO:
   // retrieve data from db
@@ -26,11 +33,9 @@ router.get('/', async (request, response, next) => {
       (row) => {
         const { date, county, state, fips, cases, deaths } = row;
 
-        if (!fips) {
+        if (!fips && county !== 'New York City') {
           // Strip out any rows without a FIPS code, as they can't be mapped
-          // to a county. This also takes care of the "geographic exceptions"
-          // mentioned in the source data (https://github.com/nytimes/covid-19-data)
-          // and prevents them from misrepresenting the min/max values.
+          // directly to a county.
           return;
         }
 
@@ -49,7 +54,18 @@ router.get('/', async (request, response, next) => {
           transformedData.maxDeaths = deathsInt;
         }
 
-        transformedData.data[date][fips] = { cases: casesInt, deaths: deathsInt };
+        // TODO: figure out how to handle the other exceptions
+        // https://github.com/nytimes/covid-19-data#geographic-exceptions
+        // Handle geographic exception for New York City
+        if (county === 'New York City') {
+          transformedData.data[date][BRONX_COUNTY] = { cases: casesInt, deaths: deathsInt };
+          transformedData.data[date][KINGS_COUNTY] = { cases: casesInt, deaths: deathsInt };
+          transformedData.data[date][NEW_YORK_COUNTY] = { cases: casesInt, deaths: deathsInt };
+          transformedData.data[date][QUEENS_COUNTY] = { cases: casesInt, deaths: deathsInt };
+          transformedData.data[date][RICHMOND_COUNTY] = { cases: casesInt, deaths: deathsInt };
+        } else {
+          transformedData.data[date][fips] = { cases: casesInt, deaths: deathsInt };
+        }
       },
       next,
       () => {

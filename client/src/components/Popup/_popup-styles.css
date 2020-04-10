@@ -8,3 +8,14 @@
   padding-bottom: 6px;
   border-bottom: 1px solid #efefef;
 }
+
+.exception-note {
+  color: grey;
+  font-size: 8pt;
+  line-height: 10pt;
+}
+
+.animation-control-icon {
+  height: 12px;
+  width: 12px;
+}
