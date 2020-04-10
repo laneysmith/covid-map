@@ -4,7 +4,7 @@ const DateControls = ({ disabled, allDates, selectedDate, onChangeDate }) => {
   const handleChangeDate = (e) => onChangeDate(e.target.value);
 
   return (
-    <div className="legend-controls">
+    <div className="legend-section">
       <label htmlFor="date">Date</label>
       <select id="date" value={selectedDate || ''} onChange={handleChangeDate} disabled={disabled}>
         {allDates.map((date) => (

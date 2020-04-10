@@ -19,7 +19,7 @@ const ANIMATION_SPEED = 500; // in milliseconds
 const App = () => {
   const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
-  const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 })); // TODO: fix the popup implementation
+  const popUpRef = useRef(new mapboxgl.Popup({ offset: 15, closeButton: false })); // TODO: fix the popup implementation
   const animationTimer = useRef(null);
 
   const [isMapLoaded, setIsMapLoaded] = useState(false);

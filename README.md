@@ -1,8 +1,10 @@
-# Covid-19 Map
+# Covid-19 Map (WIP)
 
 An interactive map displaying cumulative Covid-19 cases and deaths for US counties. See [the NY Times covid-19-data project](https://github.com/nytimes/covid-19-data) for more information on the data.
 
-![covid-map-preview](https://user-images.githubusercontent.com/11357045/78850741-c6927e00-79cc-11ea-9702-efcb1b9bb603.gif)
+The app is deployed at [https://covid.laney.tech](https://covid.laney.tech//).
+
+![covid-map-preview](https://user-images.githubusercontent.com/11357045/79015158-1a15e080-7b21-11ea-9370-11cae45e2f36.gif)
 
 ## Quick start
 

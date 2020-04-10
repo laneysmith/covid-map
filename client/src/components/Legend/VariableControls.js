@@ -6,7 +6,7 @@ const VariableControls = ({ disabled, selectedVariable, onChangeVariable }) => {
   const handleChangeVariable = (e) => onChangeVariable(e.target.value);
 
   return (
-    <div className="legend-controls">
+    <div className="legend-section">
       {[CASES, DEATHS].map((variable) => (
         <label key={variable} htmlFor={variable}>
           <input
