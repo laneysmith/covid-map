@@ -58,11 +58,12 @@ router.get('/', async (request, response, next) => {
         // https://github.com/nytimes/covid-19-data#geographic-exceptions
         // Handle geographic exception for New York City
         if (county === 'New York City') {
-          transformedData.data[date][BRONX_COUNTY] = { cases: casesInt, deaths: deathsInt };
-          transformedData.data[date][KINGS_COUNTY] = { cases: casesInt, deaths: deathsInt };
-          transformedData.data[date][NEW_YORK_COUNTY] = { cases: casesInt, deaths: deathsInt };
-          transformedData.data[date][QUEENS_COUNTY] = { cases: casesInt, deaths: deathsInt };
-          transformedData.data[date][RICHMOND_COUNTY] = { cases: casesInt, deaths: deathsInt };
+          const aggregate = { cases: casesInt, deaths: deathsInt };
+          transformedData.data[date][BRONX_COUNTY] = aggregate;
+          transformedData.data[date][KINGS_COUNTY] = aggregate;
+          transformedData.data[date][NEW_YORK_COUNTY] = aggregate;
+          transformedData.data[date][QUEENS_COUNTY] = aggregate;
+          transformedData.data[date][RICHMOND_COUNTY] = aggregate;
         } else {
           transformedData.data[date][fips] = { cases: casesInt, deaths: deathsInt };
         }
