@@ -21,6 +21,7 @@ router.get('/', async (request, response, next) => {
   //    - transform it, handle the "Geographic Exceptions"
   //    - overwrite old data in db
   //    - return data
+  // or something like that
   const transformedData = {
     data: {},
     maxCases: 0,

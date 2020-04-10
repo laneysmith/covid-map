@@ -61,7 +61,7 @@ const App = () => {
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/light-v10',
-      center: [-100, 42],
+      center: [-100, 39],
       zoom: 3.5,
     })
       .addControl(new mapboxgl.NavigationControl(), 'bottom-right')
