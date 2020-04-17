@@ -1,13 +1,14 @@
 export const CASES = 'cases';
 export const DEATHS = 'deaths';
 export const COLORS = [
-  '#FFFFFF',
-  '#D8F4CE',
-  '#90E299',
-  '#54CE8F',
-  '#1BB7A0',
-  '#14899C',
-  '#0D4F7F',
-  '#082361',
-  '#030E27',
+  '#DEEDCF',
+  '#B8DEAA',
+  '#88CE86',
+  '#62BE73',
+  '#3FAC6C',
+  '#1D9A6C',
+  '#188977',
+  '#137177',
+  '#0E4D64',
+  '#0A2F51',
 ];

@@ -19,7 +19,7 @@ export function generateColorScales(max, variable) {
   let scale = [1, COLORS[0]];
   const colorsLen = COLORS.length;
   const roundedMax = Math.ceil(max / 500) * 500;
-  for (let i = 7; i >= 0; i--) {
+  for (let i = 8; i >= 0; i--) {
     scale.push(roundedMax / Math.pow(2, i));
     scale.push(COLORS[colorsLen - i - 1]);
   }
