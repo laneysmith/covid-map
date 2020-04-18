@@ -2,13 +2,13 @@
   "name": "covid-map",
   "version": "1.0.0",
   "scripts": {
-    "install-server": "cd server && npm install",
+    "install-server": "cd server && yarn install",
     "install-client": "cd client && yarn install",
-    "postinstall": "concurrently \"(npm run install-server)\" \"(npm run install-client)\"",
+    "postinstall": "concurrently \"(yarn install-server)\" \"(yarn install-client)\"",
     "copy-env": "cp client/.env.local.example client/.env.local",
-    "start-server": "cd server && npm run dev",
+    "start-server": "cd server && yarn start",
     "start-client": "cd client && yarn start",
-    "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
+    "start": "concurrently \"yarn start-server\" \"yarn start-client\"",
     "lint": "eslint \"client/src/**/*.{js,jsx,ts,tsx}\" && eslint \"server/**/*.{js,jsx,ts,tsx}\""
   },
   "repository": {
