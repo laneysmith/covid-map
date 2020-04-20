@@ -1,32 +1,38 @@
 {
   "name": "covid-map",
   "version": "1.0.0",
-  "scripts": {
-    "install-server": "cd server && yarn install",
-    "install-client": "cd client && yarn install",
-    "postinstall": "concurrently \"(yarn install-server)\" \"(yarn install-client)\"",
-    "copy-env": "cp client/.env.local.example client/.env.local",
-    "start-server": "cd server && yarn start",
-    "start-client": "cd client && yarn start",
-    "start": "concurrently \"yarn start-server\" \"yarn start-client\"",
-    "lint": "eslint \"client/src/**/*.{js,jsx,ts,tsx}\" && eslint \"server/**/*.{js,jsx,ts,tsx}\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/laneysmith/covid-map.git"
-  },
   "author": "Laney Smith",
-  "license": "ISC",
-  "devDependencies": {
-    "concurrently": "^5.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-plugin-flowtype": "^4.7.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.5.0",
-    "prettier": "^2.0.4"
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "mapbox-gl": "^1.9.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start-prod": "react-scripts startProd",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "copy-env": "cp .env.local.example .env.local"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

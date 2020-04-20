@@ -5,12 +5,8 @@ const API_URL =
 
 const fetchData = async () => {
   return fetch(`${API_URL}/covid`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      return data;
-    })
+    .then((response) => response.json())
+    .then((data) => data)
     .catch((e) => {
       console.log(e);
     });

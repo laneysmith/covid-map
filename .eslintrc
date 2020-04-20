@@ -1,13 +1,4 @@
 {
   "extends": ["airbnb", "prettier"],
-  "ignorePatterns": ["node_modules/"],
-  "overrides": [
-    {
-      "files": ["server/**"],
-      "rules": {
-        "no-console": 0,
-        "no-unused-vars": 0
-      }
-    }
-  ]
+  "ignorePatterns": ["node_modules/"]
 }
