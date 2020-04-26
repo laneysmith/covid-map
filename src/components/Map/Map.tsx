@@ -3,8 +3,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 
 import fetchData from '../../api/fetchData';
-import { generateColorScales } from '../../utils';
-import { CASES, DEATHS } from '../../constants';
+import { generateColorScales, createFillColorArgs, createSetFeatureStateArgs } from '../../utils';
+import { CASES, DEATHS, ColorScales, Variable } from '../../types';
 import { Header } from '../Header';
 import { Legend } from '../Legend';
 import { Popup } from '../Popup';
@@ -17,23 +17,23 @@ const COUNTIES_LAYER = 'counties-layer';
 const ANIMATION_SPEED = 500; // in milliseconds
 
 const App = () => {
-  const mapRef = useRef(null);
-  const mapContainerRef = useRef(null);
-  const popUpRef = useRef(new mapboxgl.Popup({ offset: 15, closeButton: false })); // TODO: fix the popup implementation
-  const animationTimer = useRef(null);
+  const mapRef = useRef<HTMLElement | null>(null);
+  const mapContainerRef = useRef<HTMLElement | null>(null);
+  const popUpRef = useRef<HTMLElement>(new mapboxgl.Popup({ offset: 15, closeButton: false })); // TODO: fix the popup implementation
+  const animationTimer = useRef<HTMLElement | null>(null);
 
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
-  const [isMapStyleLoaded, setIsMapStyleLoaded] = useState(false);
+  const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
+  const [isMapStyleLoaded, setIsMapStyleLoaded] = useState<boolean>(false);
   const isMapReady = isMapLoaded && isMapStyleLoaded;
 
-  const [data, setData] = useState(null);
-  const [allDates, setAllDates] = useState([]);
+  const [data, setData] = useState<object | null>(null);
+  const [allDates, setAllDates] = useState<string[]>([]);
   const [allFips, setAllFips] = useState(null);
-  const [colorScales, setColorScales] = useState({ [CASES]: [], [DEATHS]: [] });
+  const [colorScales, setColorScales] = useState<ColorScales>({ [CASES]: [], [DEATHS]: [] });
 
   const [animate, setAnimate] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedVariable, setSelectedVariable] = useState(CASES);
+  const [selectedDate, setSelectedDate] = useState<string>();
+  const [selectedVariable, setSelectedVariable] = useState<Variable>(CASES);
 
   // request covid data on mount
   useEffect(() => {
@@ -44,8 +44,8 @@ const App = () => {
         setData(data);
         setAllDates(Object.keys(data));
         setColorScales({
-          [CASES]: generateColorScales(maxCases, CASES),
-          [DEATHS]: generateColorScales(maxDeaths, DEATHS),
+          [CASES]: generateColorScales(maxCases),
+          [DEATHS]: generateColorScales(maxDeaths),
         });
         const allDates = Object.keys(data);
         const mostRecentDate = allDates[allDates.length - 1];
@@ -106,9 +106,9 @@ const App = () => {
       return;
     }
 
-    allFips.forEach((fips) => {
+    allFips.forEach((fips: string) => {
       const detail = data[selectedDate][fips];
-      mapRef.current.setFeatureState(...createSetFeatureStateArgs(fips, detail));
+      mapRef.current.setFeatureState(...createSetFeatureStateArgs(fips, detail, COUNTIES_SOURCE));
     });
 
     mapRef.current.addLayer(
@@ -143,14 +143,14 @@ const App = () => {
     if (!data || !allFips || !selectedDate || !isMapReady) {
       return;
     }
-    allFips.forEach((fips) => {
+    allFips.forEach((fips: string) => {
       const detail = data[selectedDate][fips];
       mapRef.current.setFeatureState(...createSetFeatureStateArgs(fips, detail));
     });
   }, [data, allFips, selectedDate, isMapReady]);
 
   // start/stop animation
-  const onChangeAnimate = (value) => {
+  const onChangeAnimate = (value: boolean) => {
     setAnimate(value);
     if (value === true) {
       animationTimer.current = setInterval(() => {
@@ -182,46 +182,5 @@ const App = () => {
     </div>
   );
 };
-
-/**
- * Outputs the arguments for the setFeatureState method
- * @param {string} fips - fips #
- * @param {object} detail - cases & deaths
- */
-const createSetFeatureStateArgs = (fips, detail) => {
-  const cases = (detail && detail.cases) || 0;
-  const deaths = (detail && detail.deaths) || 0;
-  return [
-    {
-      source: COUNTIES_SOURCE,
-      sourceLayer: 'original',
-      id: fips,
-    },
-    {
-      cases,
-      deaths,
-    },
-  ];
-};
-
-/**
- * Outputs the 'paint.fill-color' expression for county polygons
- * based on the selected variable
- * @param {string} selectedVariable - 'cases' or 'deaths'
- * @param {object} colorScales
- */
-const createFillColorArgs = (selectedVariable, colorScales) => [
-  'case',
-  ['==', ['feature-state', selectedVariable], null],
-  'rgba(0,0,0,0.25)',
-  ['==', ['feature-state', selectedVariable], 0],
-  'rgba(0,0,0,0.25)',
-  [
-    'interpolate',
-    ['linear'],
-    ['feature-state', selectedVariable],
-    ...colorScales[selectedVariable],
-  ],
-];
 
 export default App;

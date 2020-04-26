@@ -1,9 +1,15 @@
 import React, { useMemo } from 'react';
 
 import { formatNumber, chunkArray } from '../../utils';
+import { Variable, ColorScales } from '../../types';
 
-const Scale = ({ colorScales, selectedVariable }) => {
-  const scale = colorScales[selectedVariable];
+interface IScale {
+  colorScales: ColorScales;
+  selectedVariable: Variable;
+}
+
+const Scale: React.SFC<IScale> = ({ colorScales, selectedVariable }) => {
+  const scale: string[] = colorScales[selectedVariable];
   const chunkedScale = useMemo(() => {
     const chunked = scale.length > 0 ? chunkArray(scale) : null;
     return chunked;
@@ -13,7 +19,7 @@ const Scale = ({ colorScales, selectedVariable }) => {
     <div className="legend-section legend-section--column">
       <div className="legend-scale">
         {chunkedScale &&
-          chunkedScale.map((step, index) => {
+          chunkedScale.map((step: (string | number)[], index: number) => {
             const [value, color] = step;
             return (
               <div

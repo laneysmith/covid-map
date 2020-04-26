@@ -3,7 +3,16 @@ import React from 'react';
 import { ReactComponent as PauseIcon } from './pause.svg';
 import { ReactComponent as PlayIcon } from './play.svg';
 
-const DateControls = ({
+interface IDateControls {
+  disabled: boolean;
+  allDates: string[];
+  selectedDate?: string;
+  onChangeDate: (e: string) => void;
+  animate: boolean;
+  onChangeAnimate: (e: boolean) => void;
+}
+
+const DateControls: React.SFC<IDateControls> = ({
   disabled,
   allDates,
   selectedDate,
@@ -11,7 +20,8 @@ const DateControls = ({
   animate,
   onChangeAnimate,
 }) => {
-  const handleChangeDate = (e) => onChangeDate(e.target.value);
+  const handleChangeDate = (e: React.ChangeEvent<HTMLSelectElement>): void =>
+    onChangeDate(e.target.value);
   const handleToggleAnimate = () => onChangeAnimate(!animate);
 
   return (
@@ -29,7 +39,12 @@ const DateControls = ({
           </option>
         ))}
       </select>
-      <button type="button" onClick={handleToggleAnimate} disabled={disabled}>
+      <button
+        id="animate-toggle-button"
+        type="button"
+        onClick={handleToggleAnimate}
+        disabled={disabled}
+      >
         {animate ? <PauseIcon className="animate-icon" /> : <PlayIcon className="animate-icon" />}
       </button>
     </div>

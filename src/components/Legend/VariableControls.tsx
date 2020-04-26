@@ -1,17 +1,28 @@
 import React from 'react';
 
-import { CASES, DEATHS } from '../../constants';
+import { Variable } from '../../types';
 
-const VariableControls = ({ disabled, selectedVariable, onChangeVariable }) => {
-  const handleChangeVariable = (e) => onChangeVariable(e.target.value);
+interface IVariableControls {
+  disabled: boolean;
+  selectedVariable: Variable;
+  onChangeVariable: (e: string) => void;
+}
+
+const VariableControls: React.SFC<IVariableControls> = ({
+  disabled,
+  selectedVariable,
+  onChangeVariable,
+}) => {
+  const handleChangeVariable = (e: React.ChangeEvent<HTMLInputElement>): void =>
+    onChangeVariable(e.target.value);
 
   return (
     <div className="legend-section">
-      {[CASES, DEATHS].map((variable) => (
+      {Object.values(Variable).map((variable) => (
         <label key={variable} htmlFor={variable}>
           <input
             type="radio"
-            id={variable}
+            id={`${variable}-radio-button`}
             name="variable"
             value={variable}
             checked={selectedVariable === variable}

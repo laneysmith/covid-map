@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders the correct date and variable 1`] = `
+<header>
+  <h1>
+    US Covid-19 
+    deaths
+  </h1>
+  <h2>
+    2020-02-14
+  </h2>
+</header>
+`;
