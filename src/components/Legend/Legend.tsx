@@ -1,11 +1,24 @@
 import React from 'react';
 
+import { Variable, ColorScales } from '../../types';
 import DateControls from './DateControls';
 import VariableControls from './VariableControls';
 import Scale from './Scale';
 import './_legend-styles.css';
 
-const Legend = ({
+interface ILegend {
+  loaded: boolean;
+  colorScales: ColorScales;
+  allDates: string[];
+  selectedDate?: string;
+  onChangeDate: (e: string) => void;
+  animate: boolean;
+  onChangeAnimate: (e: boolean) => void;
+  selectedVariable: Variable;
+  onChangeVariable: (e: string) => void;
+}
+
+const Legend: React.SFC<ILegend> = ({
   loaded,
   colorScales,
   allDates,
@@ -22,7 +35,8 @@ const Legend = ({
       allDates={allDates}
       selectedDate={selectedDate}
       onChangeDate={onChangeDate}
-      animate={animate} onChangeAnimate={onChangeAnimate} 
+      animate={animate}
+      onChangeAnimate={onChangeAnimate}
     />
     <VariableControls
       disabled={!loaded || animate}

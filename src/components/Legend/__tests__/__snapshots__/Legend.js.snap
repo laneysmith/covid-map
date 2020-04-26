@@ -1,0 +1,417 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Legend calls renders correctly when loaded 1`] = `
+<div
+  class="legend"
+  id="state-legend"
+>
+  <div
+    class="legend-section"
+  >
+    <label
+      for="date"
+    >
+      Date
+    </label>
+    <select
+      id="date"
+    >
+      <option
+        value="2020-02-14"
+      >
+        2020-02-14
+      </option>
+      <option
+        value="2020-02-15"
+      >
+        2020-02-15
+      </option>
+      <option
+        value="2020-02-16"
+      >
+        2020-02-16
+      </option>
+    </select>
+    <button
+      id="animate-toggle-button"
+      type="button"
+    >
+      <svg
+        class="animate-icon"
+      >
+        play.svg
+      </svg>
+    </button>
+  </div>
+  <div
+    class="legend-section"
+  >
+    <label
+      for="cases"
+    >
+      <input
+        id="cases-radio-button"
+        name="variable"
+        type="radio"
+        value="cases"
+      />
+       
+      Cases
+    </label>
+    <label
+      for="deaths"
+    >
+      <input
+        checked=""
+        id="deaths-radio-button"
+        name="variable"
+        type="radio"
+        value="deaths"
+      />
+       
+      Deaths
+    </label>
+  </div>
+  <div
+    class="legend-section legend-section--column"
+  >
+    <div
+      class="legend-scale"
+    >
+      <div
+        class="legend-scale__step"
+        id="scale-step-0"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(225, 245, 254);"
+        />
+         
+        1
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-1"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(179, 229, 252);"
+        />
+         
+        2
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-2"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(129, 212, 250);"
+        />
+         
+        3
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-3"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(79, 195, 247);"
+        />
+         
+        4
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-4"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(41, 182, 246);"
+        />
+         
+        5
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-5"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(3, 169, 244);"
+        />
+         
+        6
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-6"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(3, 155, 229);"
+        />
+         
+        7
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-7"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(2, 136, 209);"
+        />
+         
+        8
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-8"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(2, 119, 189);"
+        />
+         
+        8
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-9"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(1, 87, 155);"
+        />
+         
+        10
+      </div>
+    </div>
+    <div
+      class="source-notes"
+    >
+      Data from The New York Times
+      <br />
+      <a
+        href="https://github.com/laneysmith/covid-map"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        View project source on github
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Legend calls renders correctly when not loaded 1`] = `
+<div
+  class="legend"
+  id="state-legend"
+>
+  <div
+    class="legend-section"
+  >
+    <label
+      for="date"
+    >
+      Date
+    </label>
+    <select
+      disabled=""
+      id="date"
+    >
+      <option
+        value="2020-02-14"
+      >
+        2020-02-14
+      </option>
+      <option
+        value="2020-02-15"
+      >
+        2020-02-15
+      </option>
+      <option
+        value="2020-02-16"
+      >
+        2020-02-16
+      </option>
+    </select>
+    <button
+      disabled=""
+      id="animate-toggle-button"
+      type="button"
+    >
+      <svg
+        class="animate-icon"
+      >
+        play.svg
+      </svg>
+    </button>
+  </div>
+  <div
+    class="legend-section"
+  >
+    <label
+      for="cases"
+    >
+      <input
+        disabled=""
+        id="cases-radio-button"
+        name="variable"
+        type="radio"
+        value="cases"
+      />
+       
+      Cases
+    </label>
+    <label
+      for="deaths"
+    >
+      <input
+        checked=""
+        disabled=""
+        id="deaths-radio-button"
+        name="variable"
+        type="radio"
+        value="deaths"
+      />
+       
+      Deaths
+    </label>
+  </div>
+  <div
+    class="legend-section legend-section--column"
+  >
+    <div
+      class="legend-scale"
+    >
+      <div
+        class="legend-scale__step"
+        id="scale-step-0"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(225, 245, 254);"
+        />
+         
+        1
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-1"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(179, 229, 252);"
+        />
+         
+        2
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-2"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(129, 212, 250);"
+        />
+         
+        3
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-3"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(79, 195, 247);"
+        />
+         
+        4
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-4"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(41, 182, 246);"
+        />
+         
+        5
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-5"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(3, 169, 244);"
+        />
+         
+        6
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-6"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(3, 155, 229);"
+        />
+         
+        7
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-7"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(2, 136, 209);"
+        />
+         
+        8
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-8"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(2, 119, 189);"
+        />
+         
+        8
+      </div>
+      <div
+        class="legend-scale__step"
+        id="scale-step-9"
+      >
+        <span
+          class="legend-scale__step-swatch"
+          style="background-color: rgb(1, 87, 155);"
+        />
+         
+        10
+      </div>
+    </div>
+    <div
+      class="source-notes"
+    >
+      Data from The New York Times
+      <br />
+      <a
+        href="https://github.com/laneysmith/covid-map"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        View project source on github
+      </a>
+    </div>
+  </div>
+</div>
+`;
