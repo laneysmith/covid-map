@@ -19,12 +19,14 @@ header h2 {
 }
 
 .error-message {
+  display: flex;
+  align-items: center;
   background: rgb(222,75,75);
   background: linear-gradient(135deg, rgba(222,75,75,1) 18%, rgba(255,114,114,1) 100%);
   color: white;
   font-size: 1rem;
   margin-bottom: 1rem;
-  padding: 0.8rem 0.5rem;
+  padding: 0 0.5rem;
   width: 100%;
   transition: height 1s ease-out; 
 }
@@ -34,5 +36,5 @@ header h2 {
 }
 
 .error-message--show {
-  height: unset;
+  height: 45px;
 }
