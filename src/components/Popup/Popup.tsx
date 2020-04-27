@@ -1,17 +1,23 @@
 import React from 'react';
+// import { MapboxGeoJSONFeature } from 'mapbox-gl';
 
 import { formatNumber } from '../../utils';
 import { EXCEPTIONS } from './exceptions';
 import './_popup-styles.css';
 
-const Popup = ({ feature }) => {
-  const { id, properties } = feature;
+interface IPopup {
+  // TODO: not 'any'; reconcile MapboxGeoJSONFeature type & IFeature interface
+  feature: any;
+}
+
+const Popup: React.SFC<IPopup> = ({ feature }) => {
+  const { id, properties, state } = feature;
   const { COUNTY: county } = properties;
-  const { cases, deaths } = feature.state;
+  const { cases, deaths } = state;
   const hasCasesData = typeof cases === 'number';
   const hasDeathsData = typeof deaths === 'number';
-  const stringId = id.toString();
-  const exceptionNote = EXCEPTIONS[stringId] ? `Note: ${EXCEPTIONS[stringId]}` : null;
+  const stringId = id?.toString();
+  const exceptionNote = EXCEPTIONS.get(stringId) ? `Note: ${EXCEPTIONS.get(stringId)}` : null;
 
   return (
     <div id={`popup-${id}`}>

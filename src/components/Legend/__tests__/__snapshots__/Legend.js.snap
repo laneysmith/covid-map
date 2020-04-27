@@ -53,7 +53,7 @@ exports[`Legend calls renders correctly when loaded 1`] = `
         id="cases-radio-button"
         name="variable"
         type="radio"
-        value="cases"
+        value="CASES"
       />
        
       Cases
@@ -66,7 +66,7 @@ exports[`Legend calls renders correctly when loaded 1`] = `
         id="deaths-radio-button"
         name="variable"
         type="radio"
-        value="deaths"
+        value="DEATHS"
       />
        
       Deaths
@@ -262,7 +262,7 @@ exports[`Legend calls renders correctly when not loaded 1`] = `
         id="cases-radio-button"
         name="variable"
         type="radio"
-        value="cases"
+        value="CASES"
       />
        
       Cases
@@ -276,7 +276,7 @@ exports[`Legend calls renders correctly when not loaded 1`] = `
         id="deaths-radio-button"
         name="variable"
         type="radio"
-        value="deaths"
+        value="DEATHS"
       />
        
       Deaths

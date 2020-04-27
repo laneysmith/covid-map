@@ -1,60 +1,66 @@
 import ReactDOM from 'react-dom';
 import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { Map, Popup as PopupType } from 'mapbox-gl';
 
 import fetchData from '../../api/fetchData';
-import { generateColorScales, createFillColorArgs, createSetFeatureStateArgs } from '../../utils';
-import { CASES, DEATHS, ColorScales, Variable } from '../../types';
+import { createFeatureIdentifier, createFillColorArgs, createSetFeatureState } from '../../utils';
+import { Variable, FipsStats } from '../../types';
 import { Header } from '../Header';
 import { Legend } from '../Legend';
 import { Popup } from '../Popup';
+import useFetchDataReducer from './useFetchDataReducer';
 import './_map.css';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const COUNTIES_SOURCE = 'counties';
 const COUNTIES_LAYER = 'counties-layer';
-const ANIMATION_SPEED = 500; // in milliseconds
+const ANIMATION_SPEED = 500; // milliseconds
 
 const App = () => {
-  const mapRef = useRef<HTMLElement | null>(null);
-  const mapContainerRef = useRef<HTMLElement | null>(null);
-  const popUpRef = useRef<HTMLElement>(new mapboxgl.Popup({ offset: 15, closeButton: false })); // TODO: fix the popup implementation
-  const animationTimer = useRef<HTMLElement | null>(null);
+  const mapRef = useRef<Map | null>();
+  const mapContainerRef = useRef<HTMLDivElement>(document.createElement('div'));
+  // TODO: fix the popup implementation
+  const popUpRef = useRef<PopupType>(new mapboxgl.Popup({ offset: 15, closeButton: false }));
 
   const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
   const [isMapStyleLoaded, setIsMapStyleLoaded] = useState<boolean>(false);
-  const isMapReady = isMapLoaded && isMapStyleLoaded;
+  const isMapReady: boolean = isMapLoaded && isMapStyleLoaded;
+  const [animate, setAnimate] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedVariable, setSelectedVariable] = useState<Variable>(Variable.CASES);
 
-  const [data, setData] = useState<object | null>(null);
-  const [allDates, setAllDates] = useState<string[]>([]);
-  const [allFips, setAllFips] = useState(null);
-  const [colorScales, setColorScales] = useState<ColorScales>({ [CASES]: [], [DEATHS]: [] });
-
-  const [animate, setAnimate] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<string>();
-  const [selectedVariable, setSelectedVariable] = useState<Variable>(CASES);
+  const {
+    data,
+    datesList,
+    fipsList,
+    colorScales,
+    mostRecentDate,
+    dispatchFetchDataRequest,
+    dispatchFetchDataSuccess,
+    dispatchFetchDataFailure,
+  } = useFetchDataReducer();
 
   // request covid data on mount
   useEffect(() => {
     async function fetchCovidData() {
+      dispatchFetchDataRequest();
       try {
         const response = await fetchData();
-        const { data, maxCases, maxDeaths } = response;
-        setData(data);
-        setAllDates(Object.keys(data));
-        setColorScales({
-          [CASES]: generateColorScales(maxCases),
-          [DEATHS]: generateColorScales(maxDeaths),
-        });
-        const allDates = Object.keys(data);
-        const mostRecentDate = allDates[allDates.length - 1];
-        setSelectedDate(mostRecentDate);
-        setAllFips(Object.keys(data[mostRecentDate]));
-      } catch {}
+        const data = await response.json();
+        dispatchFetchDataSuccess(data);
+      } catch (error) {
+        dispatchFetchDataFailure(error);
+      }
     }
     fetchCovidData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (mostRecentDate) {
+      setSelectedDate(mostRecentDate);
+    }
+  }, [mostRecentDate]);
 
   // initialize map on mount
   useEffect(() => {
@@ -67,51 +73,59 @@ const App = () => {
       .addControl(new mapboxgl.NavigationControl(), 'bottom-right')
       .on('style.load', async () => setIsMapStyleLoaded(true))
       .on('load', async () => {
-        mapRef.current.addSource(COUNTIES_SOURCE, {
+        mapRef?.current?.addSource(COUNTIES_SOURCE, {
           type: 'vector',
           url: 'mapbox://mapbox.82pkq93d',
           promoteId: { original: 'FIPS' },
         });
 
-        mapRef.current.on('mouseenter', COUNTIES_LAYER, (e) => {
-          if (e.features.length) {
+        mapRef?.current?.on('mouseenter', COUNTIES_LAYER, (e) => {
+          if (e.features && e.features.length && mapRef.current) {
             mapRef.current.getCanvas().style.cursor = 'crosshair';
           }
         });
 
-        mapRef.current.on('mouseleave', COUNTIES_LAYER, () => {
-          mapRef.current.getCanvas().style.cursor = '';
+        mapRef?.current?.on('mouseleave', COUNTIES_LAYER, () => {
+          if (mapRef.current) {
+            mapRef.current.getCanvas().style.cursor = '';
+          }
           popUpRef.current.remove();
         });
 
-        mapRef.current.on('mousemove', COUNTIES_LAYER, (e) => {
-          if (e.features.length) {
+        mapRef?.current?.on('mousemove', COUNTIES_LAYER, (e) => {
+          if (e.features && e.features.length) {
             const { lat, lng } = e.lngLat;
             const feature = e.features[0];
             const popupNode = document.createElement('div');
+            console.log('feature :>> ', feature);
             ReactDOM.render(<Popup feature={feature} />, popupNode);
-            popUpRef.current.setLngLat([lng, lat]).setDOMContent(popupNode).addTo(mapRef.current);
+            if (mapRef.current) {
+              popUpRef.current.setLngLat([lng, lat]).setDOMContent(popupNode).addTo(mapRef.current);
+            }
           }
         });
 
         setIsMapLoaded(true);
       });
 
-    return () => mapRef.current.remove();
+    return () => mapRef?.current?.remove();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // wait for data, selectedDate, map, and map styles to fully load before adding data to map
   useEffect(() => {
-    if (!data || !allFips || !isMapReady) {
+    if (!data || !fipsList || !isMapReady || !selectedDate) {
       return;
     }
 
-    allFips.forEach((fips: string) => {
-      const detail = data[selectedDate][fips];
-      mapRef.current.setFeatureState(...createSetFeatureStateArgs(fips, detail, COUNTIES_SOURCE));
+    fipsList.forEach((fips: string) => {
+      const detail: FipsStats = data[selectedDate][fips];
+      mapRef?.current?.setFeatureState(
+        createFeatureIdentifier(fips, COUNTIES_SOURCE),
+        createSetFeatureState(detail)
+      );
     });
 
-    mapRef.current.addLayer(
+    mapRef?.current?.addLayer(
       {
         id: COUNTIES_LAYER,
         type: 'fill',
@@ -124,14 +138,14 @@ const App = () => {
       },
       'waterway-label'
     );
-  }, [data, allFips, isMapReady]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [data, fipsList, isMapReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // adjust color scale when switching between 'cases' & 'deaths'
   useEffect(() => {
     if (!selectedVariable || !colorScales || !isMapReady) {
       return;
     }
-    mapRef.current.setPaintProperty(
+    mapRef?.current?.setPaintProperty(
       COUNTIES_LAYER,
       'fill-color',
       createFillColorArgs(selectedVariable, colorScales)
@@ -140,28 +154,32 @@ const App = () => {
 
   // update map data when new date is selected
   useEffect(() => {
-    if (!data || !allFips || !selectedDate || !isMapReady) {
+    if (!data || !fipsList || !selectedDate || !isMapReady) {
       return;
     }
-    allFips.forEach((fips: string) => {
-      const detail = data[selectedDate][fips];
-      mapRef.current.setFeatureState(...createSetFeatureStateArgs(fips, detail));
+
+    fipsList.forEach((fips: string) => {
+      const detail: FipsStats = data[selectedDate][fips];
+      mapRef?.current?.setFeatureState(
+        createFeatureIdentifier(fips, COUNTIES_SOURCE),
+        createSetFeatureState(detail)
+      );
     });
-  }, [data, allFips, selectedDate, isMapReady]);
+  }, [data, fipsList, selectedDate, isMapReady]);
 
   // start/stop animation
   const onChangeAnimate = (value: boolean) => {
     setAnimate(value);
     if (value === true) {
-      animationTimer.current = setInterval(() => {
+      window.setInterval(() => {
         setSelectedDate((prevDate) => {
-          const currIndex = allDates.findIndex((val) => val === prevDate);
-          const nextIndex = currIndex + 1 <= allDates.length - 1 ? currIndex + 1 : 0;
-          return allDates[nextIndex];
+          const currIndex = datesList.findIndex((val: string) => val === prevDate);
+          const nextIndex = currIndex + 1 <= datesList.length - 1 ? currIndex + 1 : 0;
+          return datesList[nextIndex];
         });
       }, ANIMATION_SPEED);
     } else {
-      clearInterval(animationTimer.current);
+      window.clearInterval();
     }
   };
 
@@ -171,7 +189,7 @@ const App = () => {
       <Legend
         loaded={!!data && isMapReady}
         colorScales={colorScales}
-        allDates={allDates}
+        datesList={datesList}
         animate={animate}
         selectedVariable={selectedVariable}
         selectedDate={selectedDate}

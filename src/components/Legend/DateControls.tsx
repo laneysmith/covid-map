@@ -5,7 +5,7 @@ import { ReactComponent as PlayIcon } from './play.svg';
 
 interface IDateControls {
   disabled: boolean;
-  allDates: string[];
+  datesList: string[];
   selectedDate?: string;
   onChangeDate: (e: string) => void;
   animate: boolean;
@@ -14,7 +14,7 @@ interface IDateControls {
 
 const DateControls: React.SFC<IDateControls> = ({
   disabled,
-  allDates,
+  datesList,
   selectedDate,
   onChangeDate,
   animate,
@@ -33,7 +33,7 @@ const DateControls: React.SFC<IDateControls> = ({
         onChange={handleChangeDate}
         disabled={disabled || animate}
       >
-        {allDates.map((date) => (
+        {datesList.map((date) => (
           <option key={`date-option-${date}`} value={date}>
             {date}
           </option>

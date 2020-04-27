@@ -52,7 +52,7 @@ describe('Legend', () => {
         '#01579B',
       ],
     },
-    allDates: ['2020-02-14', '2020-02-15', '2020-02-16'],
+    datesList: ['2020-02-14', '2020-02-15', '2020-02-16'],
     selectedDate: '2020-02-14',
     selectedVariable: Variable.DEATHS,
     animate: false,

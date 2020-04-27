@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popup renders correctly with exception note 1`] = `
+<div
+  id="popup-36005"
+>
+  <h3>
+    Bronx County
+  </h3>
+  <div>
+    <b>
+      Cases:
+    </b>
+     
+    12
+  </div>
+  <div>
+    <b>
+      Deaths:
+    </b>
+     
+    1
+  </div>
+  <div
+    class="exception-note"
+  >
+    Note: Data for New York, Kings, Queens, Bronx and Richmond counties were reported in aggregate.
+  </div>
+</div>
+`;
+
+exports[`Popup renders correctly without exception note 1`] = `
+<div
+  id="popup-53061"
+>
+  <h3>
+    Bronx County
+  </h3>
+  <div>
+    <b>
+      Cases:
+    </b>
+     
+    234
+  </div>
+  <div>
+    <b>
+      Deaths:
+    </b>
+     
+    9
+  </div>
+</div>
+`;

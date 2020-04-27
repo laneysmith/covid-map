@@ -1,4 +1,6 @@
-import { Variable, ColorScales } from '../types'
+import { FillPaint } from 'mapbox-gl';
+
+import { Variable, ColorScales } from '../types';
 
 /**
  * Outputs the 'paint.fill-color' expression for county polygons
@@ -6,7 +8,7 @@ import { Variable, ColorScales } from '../types'
  * @param selectedVariable - 'cases' or 'deaths'
  * @param colorScales
  */
-export default function createFillColorArgs(selectedVariable: Variable, colorScales: ColorScales): (string | any[])[] {
+export default function createFillColorArgs(selectedVariable: Variable, colorScales: ColorScales): FillPaint['fill-color'] {
     return [
         'case',
         ['==', ['feature-state', selectedVariable], null],
