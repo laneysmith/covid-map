@@ -51,7 +51,6 @@ const App = () => {
         const data = await response.json();
         dispatchFetchDataSuccess(data);
       } catch (error) {
-        console.log('error :>> ', error);
         dispatchFetchDataFailure(error);
         setError(true);
       }
@@ -100,7 +99,6 @@ const App = () => {
             const { lat, lng } = e.lngLat;
             const feature = e.features[0];
             const popupNode = document.createElement('div');
-            console.log('feature :>> ', feature);
             ReactDOM.render(<Popup feature={feature} />, popupNode);
             if (mapRef.current) {
               popUpRef.current.setLngLat([lng, lat]).setDOMContent(popupNode).addTo(mapRef.current);

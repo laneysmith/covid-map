@@ -19,7 +19,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-prod": "react-scripts startProd",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
