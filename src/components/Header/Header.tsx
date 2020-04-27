@@ -11,9 +11,7 @@ interface IHeader {
 
 const Header: React.SFC<IHeader> = ({ selectedVariable, selectedDate, error }) => (
   <header>
-    <div className={`error-message error-message--${error ? 'show' : 'hide'}`}>
-      Something went wrong. ¯\_(ツ)_/¯
-    </div>
+    {error && <div className="error-message">Something went wrong. ¯\_(ツ)_/¯</div>}
     <h1>US Covid-19 {selectedVariable}</h1>
     {selectedDate && <h2>{selectedDate}</h2>}
   </header>
