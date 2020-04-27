@@ -19,7 +19,7 @@ const VariableControls: React.SFC<IVariableControls> = ({
   return (
     <div className="legend-section">
       {Object.entries(Variable).map(([key, value]) => (
-        <label key={value} htmlFor={value}>
+        <label key={value} htmlFor={`${value}-radio-button`}>
           <input
             type="radio"
             id={`${value}-radio-button`}

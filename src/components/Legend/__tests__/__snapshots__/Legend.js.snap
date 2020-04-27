@@ -47,7 +47,7 @@ exports[`Legend calls renders correctly when loaded 1`] = `
     class="legend-section"
   >
     <label
-      for="cases"
+      for="cases-radio-button"
     >
       <input
         id="cases-radio-button"
@@ -59,7 +59,7 @@ exports[`Legend calls renders correctly when loaded 1`] = `
       Cases
     </label>
     <label
-      for="deaths"
+      for="deaths-radio-button"
     >
       <input
         checked=""
@@ -255,7 +255,7 @@ exports[`Legend calls renders correctly when not loaded 1`] = `
     class="legend-section"
   >
     <label
-      for="cases"
+      for="cases-radio-button"
     >
       <input
         disabled=""
@@ -268,7 +268,7 @@ exports[`Legend calls renders correctly when not loaded 1`] = `
       Cases
     </label>
     <label
-      for="deaths"
+      for="deaths-radio-button"
     >
       <input
         checked=""
