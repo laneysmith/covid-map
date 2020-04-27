@@ -23,6 +23,7 @@ const App = () => {
   // TODO: fix the popup implementation
   const popUpRef = useRef<PopupType>(new mapboxgl.Popup({ offset: 15, closeButton: false }));
 
+  const [error, setError] = useState<boolean>(false);
   const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
   const [isMapStyleLoaded, setIsMapStyleLoaded] = useState<boolean>(false);
   const isMapReady: boolean = isMapLoaded && isMapStyleLoaded;
@@ -50,7 +51,9 @@ const App = () => {
         const data = await response.json();
         dispatchFetchDataSuccess(data);
       } catch (error) {
+        console.log('error :>> ', error);
         dispatchFetchDataFailure(error);
+        setError(true);
       }
     }
     fetchCovidData();
@@ -185,7 +188,7 @@ const App = () => {
 
   return (
     <div className="map-container" ref={mapContainerRef}>
-      <Header selectedVariable={selectedVariable} selectedDate={selectedDate} />
+      <Header selectedVariable={selectedVariable} selectedDate={selectedDate} error={error} />
       <Legend
         loaded={!!data && isMapReady}
         colorScales={colorScales}

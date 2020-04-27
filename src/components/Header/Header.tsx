@@ -6,12 +6,16 @@ import './_header.css';
 interface IHeader {
   selectedVariable: Variable;
   selectedDate?: string;
+  error: boolean;
 }
 
-const Header: React.SFC<IHeader> = ({ selectedVariable, selectedDate }) => (
+const Header: React.SFC<IHeader> = ({ selectedVariable, selectedDate, error }) => (
   <header>
+    <div className={`error-message error-message--${error ? 'show' : 'hide'}`}>
+      Something went wrong. ¯\_(ツ)_/¯
+    </div>
     <h1>US Covid-19 {selectedVariable}</h1>
-    <h2>{selectedDate}</h2>
+    {selectedDate && <h2>{selectedDate}</h2>}
   </header>
 );
 
