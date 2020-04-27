@@ -3,7 +3,7 @@
 exports[`Header renders correctly with error banner 1`] = `
 <header>
   <div
-    class="error-message error-message--show"
+    class="error-message"
   >
     Something went wrong. ¯\\_(ツ)_/¯
   </div>
@@ -16,11 +16,6 @@ exports[`Header renders correctly with error banner 1`] = `
 
 exports[`Header renders correctly without error banner 1`] = `
 <header>
-  <div
-    class="error-message error-message--hide"
-  >
-    Something went wrong. ¯\\_(ツ)_/¯
-  </div>
   <h1>
     US Covid-19 
     deaths
