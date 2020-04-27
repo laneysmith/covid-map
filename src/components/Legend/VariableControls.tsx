@@ -5,7 +5,7 @@ import { Variable } from '../../types';
 interface IVariableControls {
   disabled: boolean;
   selectedVariable: Variable;
-  onChangeVariable: (e: string) => void;
+  onChangeVariable: (value: Variable) => void;
 }
 
 const VariableControls: React.SFC<IVariableControls> = ({
@@ -14,22 +14,22 @@ const VariableControls: React.SFC<IVariableControls> = ({
   onChangeVariable,
 }) => {
   const handleChangeVariable = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    onChangeVariable(e.target.value);
+    onChangeVariable(Variable[e.target.value as keyof typeof Variable]);
 
   return (
     <div className="legend-section">
-      {Object.values(Variable).map((variable) => (
-        <label key={variable} htmlFor={variable}>
+      {Object.entries(Variable).map(([key, value]) => (
+        <label key={value} htmlFor={value}>
           <input
             type="radio"
-            id={`${variable}-radio-button`}
+            id={`${value}-radio-button`}
             name="variable"
-            value={variable}
-            checked={selectedVariable === variable}
+            value={key}
+            checked={selectedVariable === value}
             onChange={handleChangeVariable}
             disabled={disabled}
           />{' '}
-          {`${variable.charAt(0).toUpperCase()}${variable.slice(1)}`}
+          {`${value.charAt(0).toUpperCase()}${value.slice(1)}`}
         </label>
       ))}
     </div>

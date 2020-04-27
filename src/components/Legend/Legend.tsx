@@ -9,19 +9,19 @@ import './_legend-styles.css';
 interface ILegend {
   loaded: boolean;
   colorScales: ColorScales;
-  allDates: string[];
+  datesList: string[];
   selectedDate?: string;
   onChangeDate: (e: string) => void;
   animate: boolean;
   onChangeAnimate: (e: boolean) => void;
   selectedVariable: Variable;
-  onChangeVariable: (e: string) => void;
+  onChangeVariable: (value: Variable) => void;
 }
 
 const Legend: React.SFC<ILegend> = ({
   loaded,
   colorScales,
-  allDates,
+  datesList,
   animate,
   selectedVariable,
   selectedDate,
@@ -32,7 +32,7 @@ const Legend: React.SFC<ILegend> = ({
   <div id="state-legend" className="legend">
     <DateControls
       disabled={!loaded}
-      allDates={allDates}
+      datesList={datesList}
       selectedDate={selectedDate}
       onChangeDate={onChangeDate}
       animate={animate}

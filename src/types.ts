@@ -1,3 +1,26 @@
+export enum Variable {
+    CASES = 'cases',
+    DEATHS = 'deaths',
+}
+
+export type FipsStats = { [key in Variable]: number }
+
+export type ResponseFipsDictionary = {
+    [key: string]: { // date key
+        [key: string]: FipsStats // fips # key
+    }
+}
+
+export type ResponseData = { data: ResponseFipsDictionary, maxCases: number, maxDeaths: number }
+
+export interface IFeature {
+    id: string;
+    properties: { [key: string]: string | number };
+    state: FipsStats;
+}
+
+export type ColorScales = { [key in Variable]: (string | number)[] };
+
 export const COLORS = [
     '#DEEDCF',
     '#B8DEAA',
@@ -10,14 +33,3 @@ export const COLORS = [
     '#0E4D64',
     '#0A2F51',
 ];
-
-export enum Variable {
-    CASES = 'cases',
-    DEATHS = 'deaths',
-}
-
-export type ColorScales = { [key in Variable]: [] };
-
-export type FipsStats = { [key in Variable]: number }
-
-export type ResponseData = { data: object, maxCases: number, maxDeaths: number }

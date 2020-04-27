@@ -6,17 +6,16 @@ import { Variable } from '../../../types';
 
 describe('VariableControls', () => {
   const onChangeVariable = jest.fn();
-
   const PROPS = {
     onChangeVariable,
   };
 
   it('calls onChangeVariable with correct variable value when radio button is clicked', () => {
-    const { container, rerender } = render(
+    const { rerender, getByLabelText } = render(
       <VariableControls {...PROPS} selectedVariable={Variable.DEATHS} />
     );
-    const casesRadioBtn = container.querySelector('#cases-radio-button');
-    const deathsRadioBtn = container.querySelector('#deaths-radio-button');
+    const casesRadioBtn = getByLabelText('Cases');
+    const deathsRadioBtn = getByLabelText('Deaths');
 
     expect(deathsRadioBtn.checked).toBe(true);
 

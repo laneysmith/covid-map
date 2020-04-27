@@ -7,9 +7,8 @@ import { Variable } from '../../../types';
 describe('DateControls', () => {
   const onChangeDate = jest.fn();
   const onChangeAnimate = jest.fn();
-
   const PROPS = {
-    allDates: ['2020-02-14', '2020-02-15', '2020-02-16'],
+    datesList: ['2020-02-14', '2020-02-15', '2020-02-16'],
     selectedDate: '2020-02-15',
     onChangeDate,
     onChangeAnimate,

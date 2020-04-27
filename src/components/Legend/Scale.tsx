@@ -9,7 +9,7 @@ interface IScale {
 }
 
 const Scale: React.SFC<IScale> = ({ colorScales, selectedVariable }) => {
-  const scale: string[] = colorScales[selectedVariable];
+  const scale: (string | number)[] = colorScales[selectedVariable];
   const chunkedScale = useMemo(() => {
     const chunked = scale.length > 0 ? chunkArray(scale) : null;
     return chunked;
