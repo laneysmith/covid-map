@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 
-import { generateColorScales } from '../../utils'
-import { Variable, ResponseData, ResponseFipsDictionary } from '../../types';
+import { generateColorScales } from '../utils'
+import { Variable, ResponseData, ResponseFipsDictionary } from '../types';
 
 enum EventType {
     FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST',
