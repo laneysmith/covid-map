@@ -76,11 +76,50 @@ const App = () => {
       .addControl(new mapboxgl.NavigationControl(), 'bottom-right')
       .on('style.load', async () => setIsMapStyleLoaded(true))
       .on('load', async () => {
-        mapRef?.current?.addSource(COUNTIES_SOURCE, {
-          type: 'vector',
-          url: 'mapbox://mapbox.82pkq93d',
-          promoteId: { original: 'FIPS' },
-        });
+        mapRef?.current
+          ?.addSource(COUNTIES_SOURCE, {
+            type: 'vector',
+            url: 'mapbox://mapbox.82pkq93d',
+            promoteId: { original: 'FIPS' },
+          })
+          .addLayer(
+            {
+              id: COUNTIES_LAYER,
+              type: 'fill',
+              source: COUNTIES_SOURCE,
+              'source-layer': 'original',
+              paint: {
+                'fill-outline-color': 'rgba(0,0,0,0.5)',
+                'fill-color': 'rgba(0,0,0,0.25)',
+              },
+            },
+            'waterway-label'
+          )
+          .on('mouseenter', COUNTIES_LAYER, (e) => {
+            if (e.features && e.features.length && mapRef.current) {
+              mapRef.current.getCanvas().style.cursor = 'crosshair';
+            }
+          })
+          .on('mouseleave', COUNTIES_LAYER, () => {
+            if (mapRef.current) {
+              mapRef.current.getCanvas().style.cursor = '';
+            }
+            popUpRef.current.remove();
+          })
+          .on('mousemove', COUNTIES_LAYER, (e) => {
+            if (e.features && e.features.length) {
+              const { lat, lng } = e.lngLat;
+              const feature = e.features[0];
+              const popupNode = document.createElement('div');
+              ReactDOM.render(<Popup feature={feature} />, popupNode);
+              if (mapRef.current) {
+                popUpRef.current
+                  .setLngLat([lng, lat])
+                  .setDOMContent(popupNode)
+                  .addTo(mapRef.current);
+              }
+            }
+          });
         setIsMapLoaded(true);
       });
 
@@ -100,57 +139,22 @@ const App = () => {
         createSetFeatureState(detail)
       );
     });
-
-    mapRef?.current
-      ?.addLayer(
-        {
-          id: COUNTIES_LAYER,
-          type: 'fill',
-          source: COUNTIES_SOURCE,
-          'source-layer': 'original',
-          paint: {
-            'fill-outline-color': 'rgba(0,0,0,0.5)',
-            'fill-color': createFillColorArgs(selectedVariable, colorScales),
-          },
-        },
-        'waterway-label'
-      )
-      .on('mouseenter', COUNTIES_LAYER, (e) => {
-        if (e.features && e.features.length && mapRef.current) {
-          mapRef.current.getCanvas().style.cursor = 'crosshair';
-        }
-      })
-      .on('mouseleave', COUNTIES_LAYER, () => {
-        if (mapRef.current) {
-          mapRef.current.getCanvas().style.cursor = '';
-        }
-        popUpRef.current.remove();
-      })
-      .on('mousemove', COUNTIES_LAYER, (e) => {
-        if (e.features && e.features.length) {
-          const { lat, lng } = e.lngLat;
-          const feature = e.features[0];
-          const popupNode = document.createElement('div');
-          ReactDOM.render(<Popup feature={feature} />, popupNode);
-          if (mapRef.current) {
-            popUpRef.current.setLngLat([lng, lat]).setDOMContent(popupNode).addTo(mapRef.current);
-          }
-        }
-      });
-  }, [data, fipsList, isMapReady]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isMapReady, data, fipsList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // adjust color scale when switching between 'cases' & 'deaths'
   useDidMountEffect(() => {
-    mapRef?.current?.setPaintProperty(
-      COUNTIES_LAYER,
-      'fill-color',
-      createFillColorArgs(selectedVariable, colorScales)
-    );
-  }, [selectedVariable]);
+    if (isMapReady && data) {
+      mapRef?.current?.setPaintProperty(
+        COUNTIES_LAYER,
+        'fill-color',
+        createFillColorArgs(selectedVariable, colorScales)
+      );
+    }
+  }, [isMapReady, data, selectedVariable]);
 
   // update map data when new date is selected
   useDidMountEffect(() => {
-    if (data && mapRef?.current?.getLayer(COUNTIES_LAYER)) {
+    if (isMapReady && data && mapRef?.current?.getLayer(COUNTIES_LAYER)) {
       fipsList.forEach((fips: string) => {
         const detail: FipsStats = data[selectedDate][fips];
         mapRef?.current?.setFeatureState(
@@ -159,7 +163,7 @@ const App = () => {
         );
       });
     }
-  }, [selectedDate]);
+  }, [isMapReady, data, selectedDate]);
 
   // start/stop animation
   useInterval(() => {
