@@ -154,7 +154,7 @@ const App = () => {
 
   // update map data when new date is selected
   useDidMountEffect(() => {
-    if (isMapReady && data && mapRef?.current?.getLayer(COUNTIES_LAYER)) {
+    if (isMapReady && data && selectedDate && mapRef?.current?.getLayer(COUNTIES_LAYER)) {
       fipsList.forEach((fips: string) => {
         const detail: FipsStats = data[selectedDate][fips];
         mapRef?.current?.setFeatureState(
