@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { HTMLAttributes, useMemo } from 'react';
 
 import { formatNumber, chunkArray } from '../../utils';
 import { Variable, ColorScales } from '../../types';
 
-interface IScale {
+interface ScaleProps extends HTMLAttributes<HTMLElement> {
   colorScales: ColorScales;
   selectedVariable: Variable;
 }
 
-const Scale: React.SFC<IScale> = ({ colorScales, selectedVariable }) => {
+const Scale: React.SFC<ScaleProps> = ({ colorScales, selectedVariable }) => {
   const scale: (string | number)[] = colorScales[selectedVariable];
   const chunkedScale = useMemo(() => {
     const chunked = scale.length > 0 ? chunkArray(scale) : null;
@@ -33,7 +33,7 @@ const Scale: React.SFC<IScale> = ({ colorScales, selectedVariable }) => {
                     backgroundColor: `${color}`,
                     border: `1px solid rgba(0, 0, 0, 0.${index + 2})`,
                   }}
-                ></span>{' '}
+                />
                 {formatNumber(value)}
               </div>
             );

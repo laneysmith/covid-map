@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
 import { Variable, ColorScales } from '../../types';
 import DateControls from './DateControls';
@@ -6,7 +6,7 @@ import VariableControls from './VariableControls';
 import Scale from './Scale';
 import './_legend-styles.css';
 
-interface ILegend {
+interface LegendProps extends HTMLAttributes<HTMLElement> {
   loaded: boolean;
   colorScales: ColorScales;
   datesList: string[];
@@ -18,7 +18,7 @@ interface ILegend {
   onChangeVariable: (value: Variable) => void;
 }
 
-const Legend: React.SFC<ILegend> = ({
+const Legend: React.SFC<LegendProps> = ({
   loaded,
   colorScales,
   datesList,

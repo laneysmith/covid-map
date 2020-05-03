@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 
 import Header from '../Header';
 import { Variable } from '../../../types';
+import { FetchStatus } from '../../../hooks/useFetchDataReducer';
 
 describe('Header', () => {
   it('renders correctly without error banner', () => {
@@ -15,7 +16,7 @@ describe('Header', () => {
 
   it('renders correctly with error banner', () => {
     const { container } = render(
-      <Header selectedVariable={Variable.DEATHS} selectedDate={null} error />
+      <Header selectedVariable={Variable.DEATHS} selectedDate="" status={FetchStatus.FAILED} />
     );
 
     expect(container.firstChild).toMatchSnapshot();

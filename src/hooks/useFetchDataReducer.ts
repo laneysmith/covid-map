@@ -1,12 +1,18 @@
 import { useReducer } from 'react';
 
 import { generateColorScales } from '../utils'
-import { Variable, ResponseData, ResponseFipsDictionary } from '../types';
+import { Variable, ResponseData, ResponseFipsDictionary, ColorScales } from '../types';
 
-enum EventType {
+export enum EventType {
     FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST',
     FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS',
     FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE',
+}
+
+export enum FetchStatus {
+    LOADING = 'loading',
+    SUCCESS = 'success',
+    FAILED = 'failed',
 }
 
 type Action =
@@ -15,20 +21,18 @@ type Action =
     | { event: EventType.FETCH_DATA_FAILURE; error: object };
 
 interface ReducerState {
+    status?: FetchStatus;
     data: ResponseFipsDictionary | null;
     datesList: string[];
-    mostRecentDate: string | null;
+    mostRecentDate: string;
     fipsList: string[];
-    colorScales: {
-        [Variable.CASES]: (string | number)[],
-        [Variable.DEATHS]: (string | number)[],
-    };
+    colorScales: ColorScales;
 };
 
 const initialState = {
     data: null,
     datesList: [],
-    mostRecentDate: null,
+    mostRecentDate: '',
     fipsList: [],
     colorScales: {
         [Variable.CASES]: [],
@@ -38,12 +42,13 @@ const initialState = {
 
 function reducer(state: ReducerState, action: Action): ReducerState {
     switch (action.event) {
-        case EventType.FETCH_DATA_SUCCESS:
+        case EventType.FETCH_DATA_SUCCESS: {
             const { data, maxCases, maxDeaths } = action.payload;
             const datesList = Object.keys(data);
             const mostRecentDate = datesList[datesList.length - 1];
             const fipsList = Object.keys(data[mostRecentDate]);
             return {
+                status: FetchStatus.SUCCESS,
                 data,
                 datesList,
                 mostRecentDate,
@@ -53,19 +58,27 @@ function reducer(state: ReducerState, action: Action): ReducerState {
                     [Variable.DEATHS]: generateColorScales(maxDeaths),
                 },
             };
+        }
         case EventType.FETCH_DATA_REQUEST:
+            return {
+                ...initialState,
+                status: FetchStatus.LOADING,
+            }
         case EventType.FETCH_DATA_FAILURE:
-            return initialState;
+            return {
+                ...initialState,
+                status: FetchStatus.FAILED,
+            };
         default:
             throw new Error();
     }
 }
 
-export default function useFetchDataReducer() {
+export default function useFetchDataReducer(): any {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const dispatchFetchDataRequest = () => dispatch({ event: EventType.FETCH_DATA_REQUEST })
-    const dispatchFetchDataSuccess = (payload: ResponseData) => dispatch({ event: EventType.FETCH_DATA_SUCCESS, payload })
-    const dispatchFetchDataFailure = (error: object) => dispatch({ event: EventType.FETCH_DATA_FAILURE, error })
+    const dispatchFetchDataRequest = (): void => dispatch({ event: EventType.FETCH_DATA_REQUEST })
+    const dispatchFetchDataSuccess = (payload: ResponseData): void => dispatch({ event: EventType.FETCH_DATA_SUCCESS, payload })
+    const dispatchFetchDataFailure = (error: object): void => dispatch({ event: EventType.FETCH_DATA_FAILURE, error })
 
     return { ...state, dispatchFetchDataRequest, dispatchFetchDataSuccess, dispatchFetchDataFailure };
 }

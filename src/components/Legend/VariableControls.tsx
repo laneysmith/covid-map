@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
 import { Variable } from '../../types';
 
-interface IVariableControls {
+interface VariableControlsProps extends HTMLAttributes<HTMLElement> {
   disabled: boolean;
   selectedVariable: Variable;
   onChangeVariable: (value: Variable) => void;
 }
 
-const VariableControls: React.SFC<IVariableControls> = ({
+const VariableControls: React.SFC<VariableControlsProps> = ({
   disabled,
   selectedVariable,
   onChangeVariable,

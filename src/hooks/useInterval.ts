@@ -2,21 +2,21 @@ import { useEffect, useRef } from 'react';
 
 const ANIMATION_SPEED = 500; // milliseconds
 
-const useInterval = (callback: any, animate: boolean) => {
-    const savedCallback = useRef();
+function useInterval(callback: Function, animate: boolean): void {
+    const savedCallback = useRef<Function>();
 
     useEffect(() => {
         savedCallback.current = callback;
     }, [callback]);
 
-    useEffect(() => {
-        function tick() {
+    useEffect((): any => {
+        function tick(): void {
             // @ts-ignore
             savedCallback.current();
         }
         if (animate) {
-            let id = setInterval(tick, ANIMATION_SPEED);
-            return () => clearInterval(id);
+            const id = setInterval(tick, ANIMATION_SPEED);
+            return (): void => clearInterval(id);
         }
     }, [animate]);
 }

@@ -8,6 +8,7 @@ describe('VariableControls', () => {
   const onChangeVariable = jest.fn();
   const PROPS = {
     onChangeVariable,
+    disabled: false,
   };
 
   it('calls onChangeVariable with correct variable value when radio button is clicked', () => {

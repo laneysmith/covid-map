@@ -18,21 +18,20 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 const COUNTIES_SOURCE = 'counties';
 const COUNTIES_LAYER = 'counties-layer';
 
-const App = () => {
+const App: React.SFC = () => {
   const mapRef = useRef<Map | null>();
   const mapContainerRef = useRef<HTMLDivElement>(document.createElement('div'));
   // TODO: fix the popup implementation
   const popUpRef = useRef<PopupType>(new mapboxgl.Popup({ offset: 15, closeButton: false }));
 
-  const [error, setError] = useState<boolean>(false);
   const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
   const [isMapStyleLoaded, setIsMapStyleLoaded] = useState<boolean>(false);
   const isMapReady: boolean = isMapLoaded && isMapStyleLoaded;
   const [animate, setAnimate] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedVariable, setSelectedVariable] = useState<Variable>(Variable.CASES);
-
   const {
+    status,
     data,
     datesList,
     fipsList,
@@ -42,28 +41,22 @@ const App = () => {
     dispatchFetchDataSuccess,
     dispatchFetchDataFailure,
   } = useFetchDataReducer();
+  const date: string = selectedDate || mostRecentDate;
 
   // request covid data on mount
   useEffect(() => {
-    async function fetchCovidData() {
+    async function fetchCovidData(): Promise<void> {
       dispatchFetchDataRequest();
       try {
         const response = await fetchData();
-        const data = await response.json();
-        dispatchFetchDataSuccess(data);
+        const responseJson = await response.json();
+        dispatchFetchDataSuccess(responseJson);
       } catch (error) {
         dispatchFetchDataFailure(error);
-        setError(true);
       }
     }
     fetchCovidData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    if (mostRecentDate) {
-      setSelectedDate(mostRecentDate);
-    }
-  }, [mostRecentDate]);
 
   // initialize map on mount
   useEffect(() => {
@@ -123,17 +116,17 @@ const App = () => {
         setIsMapLoaded(true);
       });
 
-    return () => mapRef?.current?.remove();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    return (): void => mapRef?.current?.remove();
+  }, []);
 
-  // wait for data, selectedDate, map, and map styles to fully load before adding data to map
+  // wait for data, date, map, and map styles to fully load before adding data to map
   useEffect(() => {
-    if (!data || !fipsList || !isMapReady || !selectedDate) {
+    if (!data || !fipsList || !isMapReady || !date) {
       return;
     }
 
     fipsList.forEach((fips: string) => {
-      const detail: FipsStats = data[selectedDate][fips];
+      const detail: FipsStats = data[date][fips];
       mapRef?.current?.setFeatureState(
         createFeatureIdentifier(fips, COUNTIES_SOURCE),
         createSetFeatureState(detail)
@@ -154,36 +147,36 @@ const App = () => {
 
   // update map data when new date is selected
   useDidMountEffect(() => {
-    if (isMapReady && data && selectedDate && mapRef?.current?.getLayer(COUNTIES_LAYER)) {
+    if (data && date && mapRef?.current?.getLayer(COUNTIES_LAYER)) {
       fipsList.forEach((fips: string) => {
-        const detail: FipsStats = data[selectedDate][fips];
+        const detail: FipsStats = data[date][fips];
         mapRef?.current?.setFeatureState(
           createFeatureIdentifier(fips, COUNTIES_SOURCE),
           createSetFeatureState(detail)
         );
       });
     }
-  }, [isMapReady, data, selectedDate]);
+  }, [date]);
 
   // start/stop animation
   useInterval(() => {
     setSelectedDate((prevDate) => {
-      const currIndex = datesList.findIndex((val: string) => val === prevDate);
-      const nextIndex = currIndex + 1 <= datesList.length - 1 ? currIndex + 1 : 0;
+      const currIndex: number = datesList.findIndex((val: string) => val === prevDate);
+      const nextIndex: number = currIndex + 1 <= datesList.length - 1 ? currIndex + 1 : 0;
       return datesList[nextIndex];
     });
   }, animate);
 
   return (
     <div className="map-container" ref={mapContainerRef}>
-      <Header selectedVariable={selectedVariable} selectedDate={selectedDate} error={error} />
+      <Header selectedVariable={selectedVariable} selectedDate={date} status={status} />
       <Legend
         loaded={!!data && isMapReady}
         colorScales={colorScales}
         datesList={datesList}
         animate={animate}
         selectedVariable={selectedVariable}
-        selectedDate={selectedDate}
+        selectedDate={date}
         onChangeAnimate={setAnimate}
         onChangeDate={setSelectedDate}
         onChangeVariable={setSelectedVariable}

@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import Popup from '../Popup';
-import { Variable } from '../../../types';
 
 describe('Popup', () => {
   it('renders correctly with exception note', () => {
