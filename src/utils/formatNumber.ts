@@ -5,7 +5,7 @@ import { ReactText } from 'react';
  * @return rounded number as a string, formatted with commas
  */
 export default function formatNumber(number: ReactText): string {
-  const numberAsInt = typeof number === 'string' ? parseInt(number) : number;
+  const numberAsInt = typeof number === 'string' ? parseInt(number, 8) : number;
   return Math.round(numberAsInt)
     .toString()
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');

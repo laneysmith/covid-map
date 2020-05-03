@@ -33,7 +33,7 @@ const Scale: React.SFC<IScale> = ({ colorScales, selectedVariable }) => {
                     backgroundColor: `${color}`,
                     border: `1px solid rgba(0, 0, 0, 0.${index + 2})`,
                   }}
-                ></span>{' '}
+                />
                 {formatNumber(value)}
               </div>
             );

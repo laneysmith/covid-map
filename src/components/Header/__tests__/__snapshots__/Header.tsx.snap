@@ -5,12 +5,13 @@ exports[`Header renders correctly with error banner 1`] = `
   <div
     class="error-message"
   >
-    Something went wrong. ¯\\_(ツ)_/¯
+    Something went wrong.
   </div>
   <h1>
     US Covid-19 
     deaths
   </h1>
+  
 </header>
 `;
 

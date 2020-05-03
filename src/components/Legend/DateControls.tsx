@@ -22,23 +22,25 @@ const DateControls: React.SFC<IDateControls> = ({
 }) => {
   const handleChangeDate = (e: React.ChangeEvent<HTMLSelectElement>): void =>
     onChangeDate(e.target.value);
-  const handleToggleAnimate = () => onChangeAnimate(!animate);
+  const handleToggleAnimate = (): void => onChangeAnimate(!animate);
 
   return (
     <div className="legend-section">
-      <label htmlFor="date">Date</label>
-      <select
-        id="date"
-        value={selectedDate || ''}
-        onChange={handleChangeDate}
-        disabled={disabled || animate}
-      >
-        {datesList.map((date) => (
-          <option key={`date-option-${date}`} value={date}>
-            {date}
-          </option>
-        ))}
-      </select>
+      <label htmlFor="date">
+        Date
+        <select
+          id="date"
+          value={selectedDate || ''}
+          onChange={handleChangeDate}
+          disabled={disabled || animate}
+        >
+          {datesList.map((date) => (
+            <option key={`date-option-${date}`} value={date}>
+              {date}
+            </option>
+          ))}
+        </select>
+      </label>
       <button
         id="animate-toggle-button"
         type="button"

@@ -1,4 +1,69 @@
 {
-  "extends": ["airbnb", "prettier"],
-  "ignorePatterns": ["node_modules/"]
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "plugin:import/typescript"
+  ],
+  "plugins": ["jest", "react-hooks"],
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".d.ts"]
+      }
+    }
+  },
+  "ignorePatterns": [
+    "build/",
+    "node_modules/",
+    "src/**/__tests__/*",
+    "src/serviceWorker.ts",
+    "src/react-app-env.d.ts"
+  ],
+  "rules": {
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/interface-name-prefix": 0,
+    "consistent-return": 0,
+    "no-plusplus": 0,
+    "no-shadow": 0,
+    "no-unused-expressions": 0,
+    "react/jsx-curly-spacing": 0,
+    "react/jsx-equals-spacing": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react/no-array-index-key": 0,
+    "react/prop-types": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.tsx"],
+      "rules": {
+        "react/jsx-filename-extension": 0
+      }
+    },
+    {
+      "files": ["src/**/*.ts"],
+      "rules": {
+        "import/prefer-default-export": 0
+      }
+    }
+  ]
 }

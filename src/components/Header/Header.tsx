@@ -1,17 +1,18 @@
 import React from 'react';
 
+import { FetchStatus } from '../../hooks/useFetchDataReducer';
 import { Variable } from '../../types';
 import './_header.css';
 
 interface IHeader {
   selectedVariable: Variable;
   selectedDate?: string;
-  error: boolean;
+  status?: FetchStatus;
 }
 
-const Header: React.SFC<IHeader> = ({ selectedVariable, selectedDate, error }) => (
+const Header: React.SFC<IHeader> = ({ selectedVariable, selectedDate, status }) => (
   <header>
-    {error && <div className="error-message">Something went wrong. ¯\_(ツ)_/¯</div>}
+    {status === FetchStatus.FAILED && <div className="error-message">Something went wrong.</div>}
     <h1>US Covid-19 {selectedVariable}</h1>
     {selectedDate && <h2>{selectedDate}</h2>}
   </header>
