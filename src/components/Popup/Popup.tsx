@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 // import { MapboxGeoJSONFeature } from 'mapbox-gl';
 
 import { formatNumber } from '../../utils';
 import { EXCEPTIONS } from './exceptions';
 import './_popup-styles.css';
 
-interface IPopup {
+interface PopupProps extends HTMLAttributes<HTMLElement> {
   // TODO: not 'any'; reconcile MapboxGeoJSONFeature type & IFeature interface
   feature: any;
 }
 
-const Popup: React.SFC<IPopup> = ({ feature }) => {
+const Popup: React.SFC<PopupProps> = ({ feature }) => {
   const { id, properties, state } = feature;
   const { COUNTY: county } = properties;
   const { cases, deaths } = state;

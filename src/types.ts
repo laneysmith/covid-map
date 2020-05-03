@@ -13,7 +13,7 @@ export type ResponseFipsDictionary = {
 
 export type ResponseData = { data: ResponseFipsDictionary, maxCases: number, maxDeaths: number }
 
-export interface IFeature {
+export interface Feature {
     id: string;
     properties: { [key: string]: string | number };
     state: FipsStats;

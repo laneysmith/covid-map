@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
 import { ReactComponent as PauseIcon } from './pause.svg';
 import { ReactComponent as PlayIcon } from './play.svg';
 
-interface IDateControls {
+interface DateControlsProps extends HTMLAttributes<HTMLElement> {
   disabled: boolean;
   datesList: string[];
   selectedDate?: string;
@@ -12,7 +12,7 @@ interface IDateControls {
   onChangeAnimate: (e: boolean) => void;
 }
 
-const DateControls: React.SFC<IDateControls> = ({
+const DateControls: React.SFC<DateControlsProps> = ({
   disabled,
   datesList,
   selectedDate,
