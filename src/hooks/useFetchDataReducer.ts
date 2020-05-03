@@ -1,9 +1,9 @@
 import { useReducer } from 'react';
 
 import { generateColorScales } from '../utils'
-import { Variable, ResponseData, ResponseFipsDictionary } from '../types';
+import { Variable, ResponseData, ResponseFipsDictionary, ColorScales } from '../types';
 
-enum EventType {
+export enum EventType {
     FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST',
     FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS',
     FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE',
@@ -21,15 +21,12 @@ type Action =
     | { event: EventType.FETCH_DATA_FAILURE; error: object };
 
 interface ReducerState {
+    status?: FetchStatus;
     data: ResponseFipsDictionary | null;
     datesList: string[];
     mostRecentDate: string;
     fipsList: string[];
-    colorScales: {
-        [Variable.CASES]: (string | number)[],
-        [Variable.DEATHS]: (string | number)[],
-    };
-    status?: FetchStatus,
+    colorScales: ColorScales;
 };
 
 const initialState = {
