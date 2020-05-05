@@ -1,6 +1,6 @@
-import React, { HTMLAttributes, useMemo } from 'react';
+import React, { HTMLAttributes } from 'react';
 
-import { formatNumber, chunkArray } from '../../utils';
+import { formatNumber } from '../../utils';
 import { Variable, ColorScales } from '../../types';
 
 interface ScaleProps extends HTMLAttributes<HTMLElement> {
@@ -9,18 +9,15 @@ interface ScaleProps extends HTMLAttributes<HTMLElement> {
 }
 
 const Scale: React.SFC<ScaleProps> = ({ colorScales, selectedVariable }) => {
-  const scale: (string | number)[] = colorScales[selectedVariable];
-  const chunkedScale = useMemo(() => {
-    const chunked = scale.length > 0 ? chunkArray(scale) : null;
-    return chunked;
-  }, [scale]);
+  const scale: (string | number)[][] = colorScales[selectedVariable];
 
   return (
     <div className="legend-section legend-section--column">
       <div className="legend-scale">
-        {chunkedScale &&
-          chunkedScale.map((step: (string | number)[], index: number) => {
+        {scale &&
+          scale.map((step: (string | number)[], index: number) => {
             const [value, color] = step;
+            const borderOpacity = (index + 2) / 10;
             return (
               <div
                 key={`scale-step-${index}`}
@@ -31,7 +28,7 @@ const Scale: React.SFC<ScaleProps> = ({ colorScales, selectedVariable }) => {
                   className="legend-scale__step-swatch"
                   style={{
                     backgroundColor: `${color}`,
-                    border: `1px solid rgba(0, 0, 0, 0.${index + 2})`,
+                    border: `1px solid rgba(0, 0, 0, ${borderOpacity}`,
                   }}
                 />
                 {formatNumber(value)}

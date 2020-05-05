@@ -19,7 +19,7 @@ export default function createFillColorArgs(selectedVariable: Variable, colorSca
             'interpolate',
             ['linear'],
             ['feature-state', selectedVariable],
-            ...colorScales[selectedVariable],
+            ...colorScales[selectedVariable].flat(),
         ],
     ]
 };
