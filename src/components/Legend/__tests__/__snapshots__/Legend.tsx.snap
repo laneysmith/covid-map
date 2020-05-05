@@ -9,6 +9,7 @@ exports[`Legend calls renders correctly when loaded 1`] = `
     class="legend-section"
   >
     <label
+      class="legend-section__date"
       for="date"
     >
       Date
@@ -205,6 +206,7 @@ exports[`Legend calls renders correctly when not loaded 1`] = `
     class="legend-section"
   >
     <label
+      class="legend-section__date"
       for="date"
     >
       Date

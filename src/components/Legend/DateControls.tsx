@@ -26,7 +26,7 @@ const DateControls: React.SFC<DateControlsProps> = ({
 
   return (
     <div className="legend-section">
-      <label htmlFor="date">
+      <label htmlFor="date" className="legend-section__date">
         Date
         <select
           id="date"

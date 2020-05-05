@@ -28,6 +28,11 @@
   margin-right: 8px;
 }
 
+.legend-section__date {
+  display: flex;
+  width: 100%;
+}
+
 .legend select {
   flex: 1;
   height: 20px;

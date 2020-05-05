@@ -19,17 +19,17 @@ export interface Feature {
     state: FipsStats;
 }
 
-export type ColorScales = { [key in Variable]: (string | number)[] };
+export type ColorScales = { [key in Variable]: (string | number)[][] };
 
 export const COLORS = [
-    '#DEEDCF',
-    '#B8DEAA',
-    '#88CE86',
-    '#62BE73',
-    '#3FAC6C',
-    '#1D9A6C',
-    '#188977',
-    '#137177',
-    '#0E4D64',
-    '#0A2F51',
+    '#ffffc0',
+    '#f7e371',
+    '#edc552',
+    '#e3a64f',
+    '#d8864b',
+    '#cd6548',
+    '#c13f44',
+    '#a22b38',
+    '#7f1f2a',
+    '#5d141c'
 ];

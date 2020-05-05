@@ -6,7 +6,7 @@ This is the front end source code for [https://covid.laney.tech](https://covid.l
 
 Data from [the NY Times covid-19-data project](https://github.com/nytimes/covid-19-data), based on reports from state and local health agencies.
 
-![covid-map-preview](https://user-images.githubusercontent.com/11357045/79015158-1a15e080-7b21-11ea-9370-11cae45e2f36.gif)
+![covid-map-preview](https://user-images.githubusercontent.com/11357045/81026334-9e146d00-8e2e-11ea-983f-19f40669ffae.gif)
 
 ## Quick start
 
@@ -20,5 +20,4 @@ Data from [the NY Times covid-19-data project](https://github.com/nytimes/covid-
 - [NY Times Covid-19 Data](https://github.com/nytimes/covid-19-data)
 - [Create React App](https://github.com/facebook/create-react-app)
 - [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/)
-- [Hihayk Color Scale Generator](https://hihayk.github.io/scale/)
 - [Pixel Perfect svg icons](https://www.flaticon.com/authors/pixel-perfect)
