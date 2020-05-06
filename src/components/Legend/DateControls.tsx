@@ -46,6 +46,7 @@ const DateControls: React.SFC<DateControlsProps> = ({
         type="button"
         onClick={handleToggleAnimate}
         disabled={disabled}
+        aria-label="toggle date animation"
       >
         {animate ? <PauseIcon className="animate-icon" /> : <PlayIcon className="animate-icon" />}
       </button>
