@@ -96,13 +96,13 @@ button:disabled {
 }
 
 button:disabled .animate-icon {
-  fill: #C0C0C0;
+  fill: #c0c0c0;
 }
 
 select:focus,
 button:focus {
   outline: none;
-  border-color: #14899C;
+  border-color: #14899c;
 }
 
 .animate-icon {

@@ -34,6 +34,7 @@ exports[`Legend calls renders correctly when loaded 1`] = `
       </select>
     </label>
     <button
+      aria-label="toggle date animation"
       id="animate-toggle-button"
       type="button"
     >
@@ -232,6 +233,7 @@ exports[`Legend calls renders correctly when not loaded 1`] = `
       </select>
     </label>
     <button
+      aria-label="toggle date animation"
       disabled=""
       id="animate-toggle-button"
       type="button"

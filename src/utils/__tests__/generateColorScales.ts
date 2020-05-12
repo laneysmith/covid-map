@@ -37,6 +37,8 @@ describe('generateColorScales', () => {
   it('should throw an error when the the colors array is shorter than the steps', () => {
     const shortColorList = ['red', 'orange', 'yellow', 'green'];
 
-    expect(() => generateColorScales(21342, 13, shortColorList)).toThrowError('Colors array must contain at least 13 colors values.');;
+    expect(() => generateColorScales(21342, 13, shortColorList)).toThrowError(
+      'Colors array must contain at least 13 colors values.'
+    );
   });
 });

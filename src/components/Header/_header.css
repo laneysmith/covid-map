@@ -21,8 +21,8 @@ header h2 {
 .error-message {
   display: flex;
   align-items: center;
-  background: rgb(222,75,75);
-  background: linear-gradient(135deg, rgba(222,75,75,1) 18%, rgba(255,114,114,1) 100%);
+  background: rgb(222, 75, 75);
+  background: linear-gradient(135deg, rgba(222, 75, 75, 1) 18%, rgba(255, 114, 114, 1) 100%);
   color: white;
   font-size: 1rem;
   height: 45px;

@@ -2,6 +2,8 @@
   "name": "covid-map",
   "version": "1.0.0",
   "author": "Laney Smith",
+  "description": "An interactive map displaying cumulative Covid-19 cases and deaths for US counties",
+  "license": "ISC",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
@@ -9,7 +11,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "copy-env": "cp .env.local.example .env.local",
-    "lint": "eslint \"src/**/*.{ts,tsx}\""
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write src/**/*.{ts,tsx,css}"
   },
   "dependencies": {
     "@testing-library/dom": "^7.2.2",

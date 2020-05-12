@@ -6,9 +6,9 @@ import { FeatureIdentifier } from 'mapbox-gl';
  * @param source - map source name
  */
 const createFeatureIdentifier = (fips: string, source: string): FeatureIdentifier => ({
-    source,
-    sourceLayer: 'original',
-    id: fips,
+  source,
+  sourceLayer: 'original',
+  id: fips,
 });
 
 export default createFeatureIdentifier;
